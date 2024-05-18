@@ -31,3 +31,20 @@ export const sendMessage = async (req, res) => {
     console.log(error);
   }
 };
+
+
+export const getMessage = async (req, res) => {
+    try {
+        const senderId = req.id;
+        const receiverId = req.params.id;
+
+        const getConversation = await Conversation.findOne({participants:{$all: [senderId,receiverId]}}).populate('message')
+        console.log(getConversation);
+        return res.status(200).json({
+            message: 'sucessfully recived messages',
+            messages: getConversation?.message
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
