@@ -6,14 +6,14 @@ export const register = async (req, res) => {
   try {
     const { name, username, password, confirmPassword, gender } = req.body;
     if (!(name && username && password && confirmPassword && gender)) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ message: "All fields are required", success: false });
     }
     if (password !== confirmPassword) {
-      return res.status(401).json({ message: "Both Passwords should be same" });
+      return res.status(401).json({ message: "Both Passwords should be same", success: false });
     }
     const user = await User.findOne({ username });
     if (user) {
-      return res.status(402).json({ message: "Username already exists" });
+      return res.status(402).json({ message: "Username already exists", success: false });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -29,7 +29,7 @@ export const register = async (req, res) => {
     });
     return res
       .status(201)
-      .json({ message: "Account created sucessfully", user: newUser });
+      .json({ message: "Account created sucessfully", success: true });
   } catch (error) {
     console.log(error);
   }
@@ -47,7 +47,7 @@ export const login = async (req, res) => {
     }
     const isCorrectPassword = await bcrypt.compare(password, user.password);
     if (!isCorrectPassword) {
-      res.status(402).json({ message: "Invalid Password" });
+      return res.status(402).json({ message: "Invalid Password" });
     }
     const tokenData = {
       userId: user._id,
@@ -58,7 +58,8 @@ export const login = async (req, res) => {
     user.password = undefined;
     return res.status(200).cookie('token', token, {maxAge:1*24*60*60*1000, httpOnly: true, samesite: 'strict'}).json({
         message: 'Login sucessfully',
-        user: user
+        user: user,
+        success: true
     })
   } catch (error) {
     console.log(error);
