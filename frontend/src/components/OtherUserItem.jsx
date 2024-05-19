@@ -13,7 +13,7 @@ const OtherUserItem = ({ user }) => {
       <div
         onClick={handleSelectedUser}
         className={`${
-          selectedUser._id === user._id ? "bg-red-100" : ""
+          selectedUser?._id === user._id ? "bg-red-100" : ""
         } flex items-center px-2 py-1 space-x-4 cursor-pointer hover:bg-red-100`}
       >
         <div className="avatar online">

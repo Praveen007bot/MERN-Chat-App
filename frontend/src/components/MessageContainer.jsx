@@ -1,20 +1,23 @@
 import React from "react";
 import { IoSend } from "react-icons/io5";
 import Messages from "./Messages";
+import {useSelector} from 'react-redux'
 
 const MessageContainer = () => {
+
+  const {selectedUser} = useSelector(store => store.user)
   return (
     <div className="flex flex-1 bg-red-200 ml-4 rounded-lg flex-col">
       <div className="info flex px-4 py-2  bg-red-100 items-center space-x-4">
         <div className="avatar">
           <div className="w-10 rounded-full">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWUem1ykMgZrm7P2GNRhID1fnipTWf1kQ1dA&usqp=CAU"
+              src={selectedUser?.profilePhoto}
               alt="profile"
             />
           </div>
         </div>
-        <div className="name font-semibold">Praveen</div>
+        <div className="name font-semibold">{selectedUser?.name}</div>
       </div>
       <div className="messages flex-1 overflow-auto">
         <Messages />
