@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 function App() {
   return (
-    <div className="App h-screen flex items-center justify-center">
+    <div className="App h-screen flex items-center justify-center text-black">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
