@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Signup = () => {
@@ -35,8 +34,6 @@ const Signup = () => {
       if (res.data.success) {
         navigate("/login");
         toast.success(res.data.message);
-      } else {
-        toast.error(res.data.message);
       }
       setUser({
         name: "",
@@ -46,6 +43,7 @@ const Signup = () => {
         gender: "",
       });
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log(error);
     }
   };

@@ -17,7 +17,7 @@ export const sendMessage = async (req, res) => {
 
     const newMessage = await Message.create({ senderId, receiverId, message });
     if (newMessage) {
-        getConversation.message.push(newMessage._id);
+        getConversation.messages.push(newMessage._id);
     }
 
     await getConversation.save();
@@ -38,11 +38,11 @@ export const getMessage = async (req, res) => {
         const senderId = req.id;
         const receiverId = req.params.id;
 
-        const getConversation = await Conversation.findOne({participants:{$all: [senderId,receiverId]}}).populate('message')
+        const getConversation = await Conversation.findOne({participants:{$all: [senderId,receiverId]}}).populate('messages')
         console.log(getConversation);
         return res.status(200).json({
             message: 'sucessfully recived messages',
-            messages: getConversation?.message
+            messages: getConversation?.messages
         })
     } catch (error) {
         console.log(error);
