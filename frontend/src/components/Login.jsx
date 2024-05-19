@@ -34,10 +34,12 @@ const Login = () => {
         console.log(res.data.user);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
       console.log(error);
     }
   };
+
   return (
     <div className="flex flex-col justify-center p-8 border-2 border-red-300 w-[500px] rounded-xl bg-red-300">
       <div className="heading">

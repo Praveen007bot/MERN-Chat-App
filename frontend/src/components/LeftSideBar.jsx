@@ -1,8 +1,23 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import OtherUsers from "./OtherUsers";
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import {useNavigate} from 'react-router-dom'
 
 const LeftSideBar = () => {
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/v1/user/logout');
+      navigate('/login')
+      toast.success(res.data.message)
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className=" w-[300px] flex flex-col">
       <div>
@@ -16,7 +31,7 @@ const LeftSideBar = () => {
       <div className="my-4 flex-1 overflow-auto">
         <OtherUsers />
       </div>
-      <button className="px-4 py-2 bg-red-800 w-fit font-semibold">Log out</button>
+      <button onClick={handleLogout} className="px-4 py-2 bg-red-800 w-fit font-semibold">Log out</button>
     </div>
   );
 };
