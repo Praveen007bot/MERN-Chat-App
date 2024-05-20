@@ -1,8 +1,10 @@
 import React from "react";
+import {useSelector} from 'react-redux'
 
 const MessageItem = ({ message, selectedUser }) => {
+  const {authUser} = useSelector(store => store.user)
   return (
-    <div className="chat chat-end">
+    <div className={`chat ${authUser._id === message.senderId ? 'chat-end' : 'chat-start'}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
