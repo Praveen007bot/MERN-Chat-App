@@ -10,7 +10,7 @@ const Messages = () => {
   return (
     <div>
       {
-        messages?.map((message) => (<MessageItem key={message?._id} message={message} selectedUser={selectedUser} />))
+        messages && messages?.map((message) => (<MessageItem key={message?._id} message={message} selectedUser={selectedUser} />))
       }
         
     </div>

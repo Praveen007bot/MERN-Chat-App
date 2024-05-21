@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import Messages from "./Messages";
 import { setSelectedUser } from "../redux/userSlice";
@@ -30,7 +30,11 @@ const MessageContainer = () => {
           <SendInput />
         </div>
       ) : (
-        <div>null</div>
+        <div className="flex flex-col items-center justify-center w-full text-white">
+          <p className="text-4xl font-bold">Hi, Praveen</p>
+          <p className="text-2xl mt-2">Let's Start Conversation</p>
+
+        </div>
       )}
     </>
   );

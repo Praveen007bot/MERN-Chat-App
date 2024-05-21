@@ -12,7 +12,7 @@ const MessageItem = ({ message, selectedUser }) => {
       ref={scroll}
       className={`chat ${
         authUser._id === message.senderId ? "chat-end" : "chat-start"
-      }`}
+      } `}
     >
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
@@ -29,7 +29,7 @@ const MessageItem = ({ message, selectedUser }) => {
       <div className="chat-header">
         <time className="text-xs ml-4">12:45</time>
       </div>
-      <div className="chat-bubble">{message?.message}</div>
+      <div className="chat-bubble text-white">{message?.message}</div>
     </div>
   );
 };
