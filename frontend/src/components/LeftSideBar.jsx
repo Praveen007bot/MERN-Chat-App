@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import OtherUsers from "./OtherUsers";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOtherUsers } from "../redux/userSlice";
+import OtherUsers from "./OtherUsers";
 
 const LeftSideBar = () => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
+  const { otherUsers } = useSelector((store) => store.user);
+  const searchUsers = otherUsers
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const conversationUser = searchUsers?.find((user) =>
+      user.name.toLowerCase().includes(search.toLowerCase())
+    );
+    if (conversationUser) {
+      dispatch(setOtherUsers([conversationUser]));
+    } else {
+      toast.error("User not found!");
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -24,13 +40,18 @@ const LeftSideBar = () => {
   return (
     <div className=" w-[300px] flex flex-col">
       <div>
-        <form className="flex items-center space-x-1">
+        <form onSubmit={handleSearch} className="flex items-center space-x-1">
           <input
             className="placeholder-black outline-none bg-red-400  rounded-l-full px-4 py-2 font-bold mr-[-5px]"
             type="text"
             placeholder="search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="bg-red-400 py-3 rounded-r-full ml-0 px-4">
+          <button
+            type="submit"
+            className="bg-red-400 py-3 rounded-r-full ml-0 px-4"
+          >
             <FaSearch />
           </button>
         </form>
