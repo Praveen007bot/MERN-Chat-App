@@ -13,13 +13,13 @@ const useGetMessages = () => {
           `http://localhost:8000/api/v1/message/receive/${selectedUser?._id}`,
           { withCredentials: true }
         );
-        dispatch(setMessages(res?.data?.messages))
+        dispatch(setMessages(res?.data?.messages));
       } catch (error) {
         console.log(error);
       }
     };
     getMessages();
-  }, [dispatch, selectedUser]);
+  }, [selectedUser?._id, setMessages]);
 };
 
 export default useGetMessages;

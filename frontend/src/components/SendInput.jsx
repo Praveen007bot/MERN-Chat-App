@@ -9,14 +9,14 @@ const SendInput = () => {
   const { selectedUser } = useSelector((state) => state.user);
   const { messages } = useSelector((state) => state.message);
   const dispatch = useDispatch();
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
     try {
       const res = await axios.post(
         `http://localhost:8000/api/v1/message/send/${selectedUser?._id}`,
         { message: chat },
         { withCredentials: true }
       );
-      console.log(res?.data?.newMessages);
       dispatch(setMessages([...messages, res?.data?.newMessage]));
     } catch (error) {
       console.log(error);
